@@ -1,0 +1,108 @@
+read .idx /scratch/project_462000353/HPLT-REGISTERS/samples-150B-by-register-xlmrl/tokenized/dtp/eng_Latn_text_document.idx:
+dtype         : uint16
+sequence_count: 218410262
+document_count: 218410263
+sequence_lengths (shape (218410262,)): [ 487 1332  132 ...  288  144 1281]
+total_tokens: 146 Billion, (146265058506)
+sequence_pointers (shape (218410262,)): [           0          974         3638 ... 292530113586 292530114162
+ 292530114450]
+document_indices (shape (218410263,)): [        0         1         2 ... 218410260 218410261 218410262]
+read .idx /scratch/project_462000353/HPLT-REGISTERS/samples-150B-by-register-xlmrl/tokenized/HI/eng_Latn_text_document.idx:
+dtype         : uint16
+sequence_count: 120282687
+document_count: 120282688
+sequence_lengths (shape (120282687,)): [ 172   68  871 ...  601  378 2091]
+total_tokens: 87 Billion, (86653219161)
+sequence_pointers (shape (120282687,)): [           0          344          480 ... 173306432182 173306433384
+ 173306434140]
+document_indices (shape (120282688,)): [        0         1         2 ... 120282685 120282686 120282687]
+read .idx /scratch/project_462000353/HPLT-REGISTERS/samples-150B-by-register-xlmrl/tokenized/HI-IN/eng_Latn_text_document.idx:
+dtype         : uint16
+sequence_count: 77487318
+document_count: 77487319
+sequence_lengths (shape (77487318,)): [2857  606  617 ...  929   84  206]
+total_tokens: 70 Billion, (70442279339)
+sequence_pointers (shape (77487318,)): [           0         5714         6926 ... 140884556240 140884558098
+ 140884558266]
+document_indices (shape (77487319,)): [       0        1        2 ... 77487316 77487317 77487318]
+read .idx /scratch/project_462000353/HPLT-REGISTERS/samples-150B-by-register-xlmrl/tokenized/ID/eng_Latn_text_document.idx:
+dtype         : uint16
+sequence_count: 204683845
+document_count: 204683846
+sequence_lengths (shape (204683845,)): [ 95 304 175 ... 377 113  82]
+total_tokens: 148 Billion, (147568854564)
+sequence_pointers (shape (204683845,)): [           0          190          798 ... 295137707984 295137708738
+ 295137708964]
+document_indices (shape (204683846,)): [        0         1         2 ... 204683843 204683844 204683845]
+read .idx /scratch/project_462000353/HPLT-REGISTERS/samples-150B-by-register-xlmrl/tokenized/IN/eng_Latn_text_document.idx:
+dtype         : uint16
+sequence_count: 124376268
+document_count: 124376269
+sequence_lengths (shape (124376268,)): [1124  643  318 ...  837  105  723]
+total_tokens: 100 Billion, (100324778439)
+sequence_pointers (shape (124376268,)): [           0         2248         3534 ... 200649553548 200649555222
+ 200649555432]
+document_indices (shape (124376269,)): [        0         1         2 ... 124376266 124376267 124376268]
+read .idx /scratch/project_462000353/HPLT-REGISTERS/samples-150B-by-register-xlmrl/tokenized/IP/eng_Latn_text_document.idx:
+dtype         : uint16
+sequence_count: 192408641
+document_count: 192408642
+sequence_lengths (shape (192408641,)): [3836  107   60 ...  491  405 1208]
+total_tokens: 118 Billion, (118431432647)
+sequence_pointers (shape (192408641,)): [           0         7672         7886 ... 236862861086 236862862068
+ 236862862878]
+document_indices (shape (192408642,)): [        0         1         2 ... 192408639 192408640 192408641]
+read .idx /scratch/project_462000353/HPLT-REGISTERS/samples-150B-by-register-xlmrl/tokenized/LY/eng_Latn_text_document.idx:
+dtype         : uint16
+sequence_count: 31562754
+document_count: 31562755
+sequence_lengths (shape (31562754,)): [ 423  622 1009 ...  330  462  223]
+total_tokens: 20 Billion, (20391971961)
+sequence_pointers (shape (31562754,)): [          0         846        2090 ... 40783941892 40783942552
+ 40783943476]
+document_indices (shape (31562755,)): [       0        1        2 ... 31562752 31562753 31562754]
+read .idx /scratch/project_462000353/HPLT-REGISTERS/samples-150B-by-register-xlmrl/tokenized/MT/eng_Latn_text_document.idx:
+dtype         : uint16
+sequence_count: 127586474
+document_count: 127586475
+sequence_lengths (shape (127586474,)): [ 404 1269 4296 ...  159   76  956]
+total_tokens: 153 Billion, (153374305682)
+sequence_pointers (shape (127586474,)): [           0          808         3346 ... 306748608982 306748609300
+ 306748609452]
+document_indices (shape (127586475,)): [        0         1         2 ... 127586472 127586473 127586474]
+read .idx /scratch/project_462000353/HPLT-REGISTERS/samples-150B-by-register-xlmrl/tokenized/NA/eng_Latn_text_document.idx:
+dtype         : uint16
+sequence_count: 178211448
+document_count: 178211449
+sequence_lengths (shape (178211448,)): [ 110  197  632 ... 2050  232  399]
+total_tokens: 156 Billion, (156249748056)
+sequence_pointers (shape (178211448,)): [           0          220          614 ... 312499490750 312499494850
+ 312499495314]
+document_indices (shape (178211449,)): [        0         1         2 ... 178211446 178211447 178211448]
+read .idx /scratch/project_462000353/HPLT-REGISTERS/samples-150B-by-register-xlmrl/tokenized/ne/eng_Latn_text_document.idx:
+dtype         : uint16
+sequence_count: 156915368
+document_count: 156915369
+sequence_lengths (shape (156915368,)): [308 904 729 ...  62  48 169]
+total_tokens: 101 Billion, (100967208426)
+sequence_pointers (shape (156915368,)): [           0          616         2424 ... 201934416294 201934416418
+ 201934416514]
+document_indices (shape (156915369,)): [        0         1         2 ... 156915366 156915367 156915368]
+read .idx /scratch/project_462000353/HPLT-REGISTERS/samples-150B-by-register-xlmrl/tokenized/OP/eng_Latn_text_document.idx:
+dtype         : uint16
+sequence_count: 123575238
+document_count: 123575239
+sequence_lengths (shape (123575238,)): [1513  500  538 ...  346 2094  178]
+total_tokens: 133 Billion, (133359598659)
+sequence_pointers (shape (123575238,)): [           0         3026         4026 ... 266719192082 266719192774
+ 266719196962]
+document_indices (shape (123575239,)): [        0         1         2 ... 123575236 123575237 123575238]
+read .idx /scratch/project_462000353/HPLT-REGISTERS/samples-150B-by-register-xlmrl/tokenized/SP/eng_Latn_text_document.idx:
+dtype         : uint16
+sequence_count: 17571121
+document_count: 17571122
+sequence_lengths (shape (17571121,)): [ 832  550  361 ... 1542 1565  519]
+total_tokens: 32 Billion, (32391162239)
+sequence_pointers (shape (17571121,)): [          0        1664        2764 ... 64782317226 64782320310
+ 64782323440]
+document_indices (shape (17571122,)): [       0        1        2 ... 17571119 17571120 17571121]
