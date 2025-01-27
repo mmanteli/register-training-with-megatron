@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=register_sample
-#SBATCH --account=project_462000449  # for resource and queue efficiency
+#SBATCH --account=project_462000353
 #SBATCH --partition=small
-#SBATCH --time=2:30:00
+#SBATCH --time=3:30:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 ##SBATCH --hint=nomultithread
@@ -37,5 +37,5 @@ done
 
 echo "end: $(date)"
 
-mv logs/$SLURM_JOBID.out logs/sample-${START}-${END}.out
-mv logs/$SLURM_JOBID.err logs/sample-${START}-${END}.err
+mv logs/$SLURM_JOBID.out logs/$SLURM_JOB_NAME-${START}-${END}.out
+mv logs/$SLURM_JOBID.err logs/$SLURM_JOB_NAME-${START}-${END}.err

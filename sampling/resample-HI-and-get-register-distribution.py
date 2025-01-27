@@ -9,7 +9,7 @@ from argparse import ArgumentParser
 
 # Registers used in the experiment.
 # note: if you put sublabels here, the end of the loop, just before saving, requires special cases
-registers = ["dtp","HI","HI-IN","ID","IN","IP","MT","NA","ne","OP","SP","LY", "no-label"]
+registers =["HI"]
 
 
 # mappings between labels
@@ -27,27 +27,12 @@ LABEL_HIERARCHY = {
 LABEL_PARENT = {c: p for p, cs in LABEL_HIERARCHY.items() for c in cs}
 
 
-# factor of data to take; there is too much "IN" for example in the data, so we do not want all of it
-# approximated from HPLT statistics, to 150B so that we get at least 100B
+# USING ONLY HI HERE
 limits_en = {
-	"dtp": 0.18732782369146006,
 	"HI": 1,
-	"ID": 0.47222222222222222,
-	"IN": 0.18428184281842822,
-	"IP": 0.2833333333333333,
-	"MT": 0.5,
-	"NA": 0.29629629629629634,
-	"ne": 0.2504604051565377,
-	"OP": 0.3215130023640662,
-	"SP": 1,
-	"LY": 1,
-	"no-label": 0.8,
-	"HI-IN": 1,
 }
 limits = {"eng_Latn": limits_en}
 
-# this for testing
-label_counts={k:0 for k in registers}
 
 def argparser():
     ap = ArgumentParser()
@@ -93,6 +78,7 @@ for k in registers:
     os.makedirs(f'results/{args.lang}/{k}', exist_ok=True)
 filenames = {k:open(f'results/{args.lang}/{k}/{args.file_prefix}{args.lang}_{k}{args.file_suffix}.jsonl', 'a') for k in registers}
 
+collection = []
 # PIPED INPUT
 for line in sys.stdin:   # this is a double line
         texts,labels = line.split(args.sep)
@@ -104,27 +90,15 @@ for line in sys.stdin:   # this is a double line
 
         probabilities = labeld["register_probabilities"]
         r = assign_labels(probabilities, args.threshold)
-        if len(r) == 0:   # no label
-            register="no-label"
-        elif args.exclude_hybrids and is_hybrid(r):
-            if r == set(["HI","IN"]):
-                register = "HI-IN"
-            else:
-                continue
-        else: 
-            register = '-'.join([j for j in r if j in args.registers])  # remove sublabel here, but save it in file
-            # for the two exceptions
-            if register=="NA-ne" or register=="ne-NA":
-                register="ne"
-            if register=="IN-dtp" or register=="dtp-IN":
-                register="dtp"
+        register = "-".join([j for j in r]) 
 
-        # because we do not want the entire 23T, we saple down with register specific limits
-        if random.random() < limits[args.lang][register]:
-            print(json.dumps({"id":textd["id"], "text":textd["text"], "register":[*r]}, ensure_ascii=False), file=filenames[register])  #tested to be faster than .get etc
-            # hpltver1.0 does not have id, so make it manually or save url or somthing then
-            #label_counts[register]+=1
+        if register == "HI" or register == "HI-re" or register == "re-HI":
+            print(json.dumps({"id":textd["id"], "text":textd["text"], "register":[*r]}, ensure_ascii=False), file=filenames["HI"])  #tested to be faster than .get etc
+        collection.append(register)
 
 for k,v in filenames.items():
     v.close()
+with open(f"results/register_dist_{args.file_suffix}.csv", "w") as f:
+    for line in collection:
+        f.write(f"{line}\n")
 #print(label_counts)
