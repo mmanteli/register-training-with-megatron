@@ -186,7 +186,7 @@ echo "Using --cpu-bind=mask_cpu:$BIND_MASK"
 # add a pythonuserbase to an empty dir to avoid problems with user's local
 # python install being imported into the singularity container.
 #mkdir -p pythonuserbase
-export PYTHONUSERBASE=pythonuserbase/lib/python3.10/site-packages/ #/scratch/project_462000353/avirtanen/Megatron-LM-lumi-head/pythonuserbase/lib/python3.10/site-packages/
+export PYTHONUSERBASE=/scratch/project_462000353/amanda/megatron-training/register-training-with-megatron/pythonuserbase #/scratch/project_462000353/avirtanen/Megatron-LM-lumi-head/pythonuserbase/lib/python3.10/site-packages/
 
 echo $CMD
 

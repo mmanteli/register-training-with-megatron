@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=8
 #SBATCH --mem=0
 #SBATCH --partition=standard-g
-#SBATCH --time=02-00:00:00
+#SBATCH --time=01-23:57:00
 #SBATCH --gpus-per-node=mi250:8
 #SBATCH --exclusive=user
 #SBATCH --hint=nomultithread
@@ -91,8 +91,8 @@ TRAIN_SAMPLES=$((TOTAL_TOKENS/SEQ_LEN))
 LR_DECAY_SAMPLES=$TRAIN_SAMPLES
 LR_WARMUP_SAMPLES=$((GLOBAL_BATCH_SIZE*500))
 
-LOG_INTERVAL=50
-SAVE_INTERVAL=500
+LOG_INTERVAL=100
+SAVE_INTERVAL=1000
 EVAL_INTERVAL=4000   # eval does not work with validation data undefined
 EVAL_STEPS=100
 
@@ -185,7 +185,7 @@ echo "Using --cpu-bind=mask_cpu:$BIND_MASK"
 # add a pythonuserbase to an empty dir to avoid problems with user's local
 # python install being imported into the singularity container.
 #mkdir -p pythonuserbase
-export PYTHONUSERBASE=pythonuserbase/lib/python3.10/site-packages/ #/scratch/project_462000353/avirtanen/Megatron-LM-lumi-head/pythonuserbase/lib/python3.10/site-packages/
+export PYTHONUSERBASE=/scratch/project_462000353/amanda/megatron-training/register-training-with-megatron/pythonuserbase #/scratch/project_462000353/avirtanen/Megatron-LM-lumi-head/pythonuserbase/lib/python3.10/site-packages/
 
 echo $CMD
 
