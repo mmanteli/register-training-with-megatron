@@ -15,6 +15,8 @@
 #SBATCH --error=logs/%x-%j.err
 
 REGISTER=$1
+echo $REGISTER
+echo "------"
 MEGATRON_PATH="/scratch/project_462000353/amanda/megatron-training/Megatron-LM-lumi"
 
 mkdir -p workdir

@@ -79,6 +79,7 @@ dtype         : {dtype.__name__}
 sequence_count: {sequence_count}
 document_count: {document_count}
 sequence_lengths (shape {sequence_lengths.shape}): {sequence_lengths}
+max_sequence_length: {np.max(sequence_lengths)}
 total_tokens: {millify(total_tokens)}, ({total_tokens})
 sequence_pointers (shape {sequence_pointers.shape}): {sequence_pointers}
 document_indices (shape {document_indices.shape}): {document_indices}''', file=sys.stderr)
