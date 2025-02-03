@@ -4,7 +4,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=7
 #SBATCH --mem=30G
-#SBATCH --partition=dev-g
+#SBATCH --partition=small-g
 #SBATCH --time=1:12:00
 #SBATCH --gres=gpu:mi250:1
 #SBATCH --account=project_462000615
@@ -22,6 +22,7 @@ evaluation=$1
 REGISTER=$2
 STEP=$3
 
+#full path so renaming works
 model_to_evaluate="/scratch/project_462000353/amanda/megatron-training/register-training-with-megatron/checkpoints_converted/${REGISTER}/iter_${STEP}"
 
 
@@ -52,6 +53,13 @@ case $evaluation in
         srun python /scratch/project_462000353/amanda/register-training/pythonuserbase/bin/lighteval accelerate \
             --model_args "pretrained=${model_to_evaluate},tokenizer=gpt2" \
             --tasks "/scratch/project_462000353/amanda/register-training/Lighteval-on-LUMI/examples/tasks/open_llm_leaderboard_tasks.txt" \
+            --output_dir eval_results/${evaluation}/ \
+            --override_batch_size 16
+    ;;
+    "preliminary")
+        srun python /scratch/project_462000353/amanda/register-training/pythonuserbase/bin/lighteval accelerate \
+            --model_args "pretrained=${model_to_evaluate},tokenizer=gpt2" \
+            --tasks "/scratch/project_462000353/amanda/register-training/register-model-training/evaluation/multiple.txt" \
             --output_dir eval_results/${evaluation}/ \
             --override_batch_size 16
     ;;
