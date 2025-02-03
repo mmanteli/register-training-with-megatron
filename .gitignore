@@ -7,3 +7,7 @@ logs
 results
 misc
 TEST
+.tmp*
+__pycache__
+conversion/gpt2-tokenizer/*
+!conversion/gpt2-tokenizer/README.md
