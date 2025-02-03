@@ -6,15 +6,15 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 ##SBATCH --hint=nomultithread
-#SBATCH --cpus-per-task=64
+#SBATCH --cpus-per-task=128
 #SBATCH -o logs/%j.out
 
 module load LUMI
 module load parallel
 
-REGISTER=IN
+REGISTER=$1
 lang="eng_Latn"
-suffix=""
+suffix=""  # for testing, to not override full data
 
 echo "CONCATENATE REGISTER ${REGISTER}"
 
@@ -26,8 +26,8 @@ mkdir -p $output
 
 echo "Start: $(date)"
 
-cat ${data}/*[0-9].jsonl | parallel --pipe -j64 python3 concatenate_and_check.py > ${output}/${lang}_${REGISTER}${suffix}.jsonl
+cat ${data}/*[0-9].jsonl | parallel --pipe -j128 python3 concatenate_and_check.py > ${output}/${lang}_${REGISTER}${suffix}.jsonl
 
 echo "end: $(date)"
 
-cp logs/$SLURM_JOBID.out logs/concat-${REGISTER}.out
+cp logs/$SLURM_JOBID.out logs/${SLURM_JOB_NAME}-${REGISTER}.out
