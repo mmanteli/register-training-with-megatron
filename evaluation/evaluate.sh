@@ -3,9 +3,9 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=7
-#SBATCH --mem=30G
-#SBATCH --partition=small-g
-#SBATCH --time=1:12:00
+#SBATCH --mem=50G
+#SBATCH --partition=dev-g
+#SBATCH --time=0:30:00
 #SBATCH --gres=gpu:mi250:1
 #SBATCH --account=project_462000615
 #SBATCH --output=logs/%x-%j.out
@@ -15,12 +15,14 @@
 module purge
 module use /appl/local/csc/modulefiles
 module load pytorch/2.4
-export PYTHONPATH=/scratch/project_462000353/amanda/register-training/pythonuserbase/lib/python3.10/site-packages:$PYTHONPATH
+export PYTHONPATH=/scratch/project_462000353/amanda/megatron-training/pythonuserbase/lib/python3.10/site-packages:$PYTHONPATH
 
 
 evaluation=$1
 REGISTER=$2
 STEP=$3
+
+echo $evaluation $REGISTER $STEP
 
 #full path so renaming works
 model_to_evaluate="/scratch/project_462000353/amanda/megatron-training/register-training-with-megatron/checkpoints_converted/${REGISTER}/iter_${STEP}"

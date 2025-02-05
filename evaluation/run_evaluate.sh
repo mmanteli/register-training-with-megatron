@@ -2,7 +2,7 @@
 
 
 REGISTER=$1
-evaluation="${2:-preliminary}"
+evaluation="${2:-fineweb}"
 
 ckpts="/scratch/project_462000353/amanda/megatron-training/register-training-with-megatron/checkpoints_converted/${REGISTER}"
 
