@@ -4,7 +4,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=7
 #SBATCH --mem=50G
-#SBATCH --partition=dev-g
+#SBATCH --partition=small-g
 #SBATCH --time=0:30:00
 #SBATCH --gres=gpu:mi250:1
 #SBATCH --account=project_462000615
@@ -43,8 +43,9 @@ case $evaluation in
             --override_batch_size 16
     ;;
     "fineweb")
-        srun python /scratch/project_462000353/amanda/register-training/pythonuserbase/bin/lighteval accelerate \
-            --model_args "pretrained=${model_to_evaluate},tokenizer=gpt2" \
+        export HF_DATASETS_TRUST_REMOTE_CODE=true
+        srun python /scratch/project_462000353/amanda/megatron-training/pythonuserbase/bin/lighteval accelerate \
+            --model_args "pretrained=${model_to_evaluate},tokenizer=gpt2,trust_remote_code=True" \
             --custom_tasks "/scratch/project_462000353/amanda/register-training/Lighteval-on-LUMI/evals/tasks/lighteval_tasks.py" \
             --max_samples 1000 \
             --tasks "/scratch/project_462000353/amanda/register-training/Lighteval-on-LUMI/evals/tasks/fineweb.txt" \
