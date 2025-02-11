@@ -12,3 +12,4 @@ eval_results
 __pycache__
 conversion/gpt2-tokenizer/*
 !conversion/gpt2-tokenizer/README.md
+old

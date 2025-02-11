@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#SBATCH --job-name=test-1Node-1.71B
-#SBATCH --nodes=1
+#SBATCH --job-name=HI-IN_HI_dtp_OP-1.71B
+#SBATCH --nodes=16
 #SBATCH --cpus-per-task=7
 #SBATCH --ntasks-per-node=8
 #SBATCH --mem=0
-#SBATCH --partition=dev-g
-#SBATCH --time=00-00:29:00
+#SBATCH --partition=standard-g
+#SBATCH --time=01-23:57:00
 #SBATCH --gpus-per-node=mi250:8
 #SBATCH --exclusive=user
 #SBATCH --hint=nomultithread
@@ -14,14 +14,12 @@
 #SBATCH --output=logs/%x-%j.out
 #SBATCH --error=logs/%x-%j.err
 
-
 # HI-IN HI IN NA OP
 REGISTER_1=HI-IN
 REGISTER_2=HI
-REGISTER_3=IN
-REGISTER_4=NA
-REGISTER_5=OP
-REGISTER="${REGISTER_1}_${REGISTER_2}_${REGISTER_3}_${REGISTER_4}_${REGISTER_5}"
+REGISTER_3=dtp
+REGISTER_4=OP
+REGISTER="${REGISTER_1}_${REGISTER_2}_${REGISTER_3}_${REGISTER_4}"
 MEGATRON_PATH="/scratch/project_462000353/amanda/megatron-training/Megatron-LM-lumi"
 
 mkdir -p workdir
@@ -60,7 +58,7 @@ ln -f -s "${SLURM_JOB_NAME}-${SLURM_JOB_ID}.out" logs/latest_${REGISTER}.out
 ln -f -s "${SLURM_JOB_NAME}-${SLURM_JOB_ID}.err" logs/latest_${REGISTER}.err
 
 
-CHECKPOINT_PATH="/scratch/project_462000353/amanda/megatron-training/register-training-with-megatron/checkpoints-1N/${REGISTER}"
+CHECKPOINT_PATH="/scratch/project_462000353/amanda/megatron-training/register-training-with-megatron/checkpoints/${REGISTER}"
 TENSORBOARD_PATH="tensorboard/${REGISTER}.$SLURM_JOB_ID"
 #rm -rf "$CHECKPOINT_PATH" "$TENSORBOARD_PATH" # Start from scratch
 
@@ -68,18 +66,16 @@ export CUDA_DEVICE_MAX_CONNECTIONS=1
 
 #TRAIN_DATA_PATH="/scratch/project_462000353/HPLT-REGISTERS/samples-150B-by-register-xlmrl/tokenized"
 TRAIN_DATA_PATH="/flash/project_462000353/registers"
-data1="0.2 ${TRAIN_DATA_PATH}/${REGISTER_1}/eng_Latn_text_document"
-data2="0.2 ${TRAIN_DATA_PATH}/${REGISTER_2}/eng_Latn_text_document"
-data3="0.2 ${TRAIN_DATA_PATH}/${REGISTER_3}/eng_Latn_text_document"
-data4="0.2 ${TRAIN_DATA_PATH}/${REGISTER_4}/eng_Latn_text_document"
-data5="0.2 ${TRAIN_DATA_PATH}/${REGISTER_5}/eng_Latn_text_document"
+data1="0.25 ${TRAIN_DATA_PATH}/${REGISTER_1}/eng_Latn_text_document"
+data2="0.25 ${TRAIN_DATA_PATH}/${REGISTER_2}/eng_Latn_text_document"
+data3="0.25 ${TRAIN_DATA_PATH}/${REGISTER_3}/eng_Latn_text_document"
+data4="0.25 ${TRAIN_DATA_PATH}/${REGISTER_4}/eng_Latn_text_document"
 #TRAIN_DATA="0.2 ${TRAIN_DATA_PATH}/${REGISTER_1}/eng_Latn_text_document 0.5 ${TRAIN_DATA_PATH}/${REGISTER_2}/eng_Latn_text_document"
-TRAIN_DATA="${data1} ${data2} ${data3} ${data4} ${data5}"
+TRAIN_DATA="${data1} ${data2} ${data3} ${data4}"
 # YOU CAN DEFINE SAMPLING like this:
 #TRAIN_DATA='0.5 dataset1, 0.5 dataset2'
 # and validation like this:
 #VALIDATION_DATA=""
-
 
 # TOKENIZER given as merges and vocab
 MERGES=/scratch/project_462000353/tokenizers/gpt2/merges.txt
@@ -107,10 +103,9 @@ TRAIN_SAMPLES=$((TOTAL_TOKENS/SEQ_LEN))
 LR_DECAY_SAMPLES=$TRAIN_SAMPLES
 LR_WARMUP_SAMPLES=$((GLOBAL_BATCH_SIZE*500))
 
-# this is testing file, so set these to really small
-LOG_INTERVAL=5
-SAVE_INTERVAL=5
-EVAL_INTERVAL=400   # eval does not work with validation data undefined
+LOG_INTERVAL=100
+SAVE_INTERVAL=1000
+EVAL_INTERVAL=4000   # eval does not work with validation data undefined
 EVAL_STEPS=100
 
 OPTIMIZER_ARGS=" \
@@ -228,6 +223,6 @@ srun \
     $CMD
 
 echo "END $SLURM_JOBID: $(date)"
-cp "${SLURM_JOB_NAME}-${SLURM_JOB_ID}.out" "logs/test/${REGISTER}-1.71B-${SLURM_JOB_ID}.out"
-cp "${SLURM_JOB_NAME}-${SLURM_JOB_ID}.err" "logs/test/${REGISTER}-1.71B-${SLURM_JOB_ID}.err"
+cp "${SLURM_JOB_NAME}-${SLURM_JOB_ID}.out" "logs/done/${REGISTER}-1.71B-${SLURM_JOB_ID}.out"
+cp "${SLURM_JOB_NAME}-${SLURM_JOB_ID}.err" "logs/done/${REGISTER}-1.71B-${SLURM_JOB_ID}.err"
 exit 0
