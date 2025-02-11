@@ -12,7 +12,7 @@
 
 
 register=$1
-limit="0015000"  # limiting to this for now
+limit="0050000"  # limiting to this for now
 
 if [ "$#" -ne 1 ]; then
     echo "Usage: input register as parameter"
