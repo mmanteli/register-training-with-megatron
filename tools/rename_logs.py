@@ -40,6 +40,9 @@ def rename_files(args):
         if token:
             new_filename = f"{token}_{filename}"
             new_path = os.path.join(directory, "parsed", new_filename)
+            if os.path.isfile(new_path):
+                print(f"Already converted {filename}.")
+                continue
             shutil.copyfile(file_path, new_path)
             print(f'Copied: {filename} -> {new_path}')
             #os.rename(file_path, new_path)
@@ -50,7 +53,7 @@ def rename_files(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Rename files based on token extracted from their contents.")
     parser.add_argument("directory", help="Path to the directory containing files to rename.")
-    parser.add_argument("-n", "--num-lines", type=int, default=5, help="Number of lines to scan for the token (default: 10)")
+    parser.add_argument("-n", "--num-lines", type=int, default=5, help="Number of lines to scan for the token (default: 5)")
     parser.add_argument("--prefix", type=str, default="register-1.71B", help="limiting to files with this in the name.")
     args = parser.parse_args()
     print(args)
