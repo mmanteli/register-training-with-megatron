@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=evaluate
+#SBATCH --job-name=baseline_evaluate
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=7
@@ -19,17 +19,34 @@ export PYTHONPATH=/scratch/project_462000353/amanda/megatron-training/pythonuser
 
 
 evaluation=$1
-REGISTER=$2
+model=$2
 STEP=$3
+
+case $model in
+    "fineweb")
+        model_to_evaluate="/scratch/project_462000353/pyysalos/second-hplt-eval/fineweb_iter_${STEP}"
+        if ! [ -d $model_to_evaluate ]; then
+            echo "Model path does not exist."
+            exit 1
+        fi
+    ;;
+    "hplt-v2-dedup")
+        model_to_evaluate="/scratch/project_462000353/pyysalos/second-hplt-eval/hplt_v2_dedup_iter_${STEP}"
+        if ! [ -d $model_to_evaluate ]; then
+            echo "Model path does not exist."
+            exit 1
+        fi
+    ;;
+    *)
+        echo "error in finding model"
+        exit 1
+    ;;
+esac
 
 sleep_time="${4:-0}"
 sleep $sleep_time   # this is because there is a problem with the jobs (+200) starting simulateneously and crashing
 
-echo $evaluation $REGISTER $STEP
-
-#full path so renaming works
-model_to_evaluate="/scratch/project_462000353/amanda/megatron-training/register-training-with-megatron/checkpoints_converted/${REGISTER}/iter_${STEP}"
-
+echo $evaluation $model $STEP
 
 export TRANSFORMERS_CACHE="/scratch/project_462000353/cache"
 export HF_HOME="/scratch/project_462000353/cache"
@@ -76,13 +93,16 @@ esac
 
 echo "END: $(date)"
 
+
+
+# default location looks like this: _scratch_project_462000353_pyysalos_second-hplt-eval_fineweb_iter_0001000
 default_location=$(echo $model_to_evaluate | tr "/" "_" )   # this is what lighteval gives
 new_location=$(echo $default_location | rev | cut -f 1-3 -d"_" | rev)  # this results in "IP_iter_XXXXX
-new_save_path=eval_results/${evaluation}/${REGISTER}/${new_location}/
+new_save_path=eval_results/${evaluation}/${model}/${new_location}/
 mkdir -p $new_save_path
 mv eval_results/${evaluation}/results/$default_location/* $new_save_path
 #rm -r eval_results/${evaluation}/results/$default_location 
 
 # move logs
-mv logs/${SLURM_JOB_NAME}-${SLURM_JOB_ID}.out logs/done/${evaluation}/${REGISTER}-${STEP}-${SLURM_JOB_NAME}-${SLURM_JOB_ID}.out
-mv logs/${SLURM_JOB_NAME}-${SLURM_JOB_ID}.err logs/done/${evaluation}/${REGISTER}-${STEP}-${SLURM_JOB_NAME}-${SLURM_JOB_ID}.err
+mv logs/${SLURM_JOB_NAME}-${SLURM_JOB_ID}.out logs/done/${evaluation}/${model}-${STEP}-${SLURM_JOB_NAME}-${SLURM_JOB_ID}.out
+mv logs/${SLURM_JOB_NAME}-${SLURM_JOB_ID}.err logs/done/${evaluation}/${model}-${STEP}-${SLURM_JOB_NAME}-${SLURM_JOB_ID}.err
