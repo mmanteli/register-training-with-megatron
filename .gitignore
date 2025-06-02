@@ -16,3 +16,6 @@ old
 parsed_loss_files
 plots
 lower-quality
+*.bin
+comparisons/comparison-with*/result
+comparisons/sample
