@@ -1,0 +1,14 @@
+predicted_class     0    1
+parsed_register           
+HI               4125   69
+HI-IN            3816  237
+ID               5091  386
+IN               8566  391
+IP               6259   34
+LY               3437  289
+MT               5385   67
+NA               7335   57
+OP               6130  146
+SP               3720  135
+dtp              9810  190
+ne               6117   43
